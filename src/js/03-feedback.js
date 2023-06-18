@@ -11,7 +11,7 @@ const refs = {
 refs.form.addEventListener('input', throttle(onInputData, 500));
 refs.form.addEventListener('submit', onFormSubmit);
 
-
+populateFeedbackForm()
 
 function onInputData(e){
     formData = {
@@ -21,7 +21,7 @@ function onInputData(e){
     formData[e.target.name] = e.target.value.trim();
   
     localStorage.setItem(LOCAL_KEY, JSON.stringify(formData));
-  
+ 
 }
 
 function onFormSubmit(e) {
@@ -38,3 +38,10 @@ function onFormSubmit(e) {
   formData = {};
 }
 
+function populateFeedbackForm() {
+    let data = localStorage.getItem(LOCAL_KEY);
+    if (!data) return;
+    formData = JSON.parse(data);
+    refs.input.value = formData.email ?? '';
+    refs.textarea.value = formData.message ?? '';
+  }
